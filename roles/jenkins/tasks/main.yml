@@ -10,6 +10,9 @@
     url: https://pkg.jenkins.io/debian/jenkins.io.key
     state: present
 
+- name: Retrieve Jenkins GPG key
+  shell: "wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | apt-key add -"
+
 - name: Add Jenkins apt repository
   apt_repository:
     repo: deb https://pkg.jenkins.io/debian-stable binary/

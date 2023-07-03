@@ -17,7 +17,7 @@ module "ec2" {
 }
 module "EventBridge" {
   source                     = "./module/EventBridge"
-  time_instance_start        = "cron(00 16 * * ? *)" 
+  time_instance_start        = "cron(10 22 * * ? *)" 
   time_instance_stop         = "cron(00 04 * * ? *)" 
   instance_id                = module.ec2.aws_instance_id
   email_dev                  = "yuvalcoren@gmail.com"

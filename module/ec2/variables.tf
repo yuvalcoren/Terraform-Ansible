@@ -18,4 +18,8 @@ variable "selected_domain" {
   type        = string
   default     = ""
 }
-
+variable "availability_zone" {
+  description = "availability zone"
+  type        = string
+  default     = ""
+}

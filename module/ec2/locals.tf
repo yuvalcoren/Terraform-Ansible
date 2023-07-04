@@ -5,4 +5,5 @@ locals {
   key_name           = "devkey"
   instance_type      = var.instance_type
   selected_domain    = var.selected_domain
+  availability_zone  = var.availability_zone
 }

@@ -1,4 +1,4 @@
-
+#Creates EvenBridge scehduler. using universal targets, stopping the instance using stopInstances api call.
 resource "aws_scheduler_schedule" "stop_instance_in_time" {
   name = "my-schedule-stop"
 
@@ -16,6 +16,7 @@ resource "aws_scheduler_schedule" "stop_instance_in_time" {
     )
   }
 }
+#Creates EvenBridge scehduler. using universal targets, starting the instance using startInstances api call.
 resource "aws_scheduler_schedule" "start_instance_in_time" {
   name = "my-schedule-start"
 
@@ -34,6 +35,7 @@ resource "aws_scheduler_schedule" "start_instance_in_time" {
     )
   }
 }
+#Captures when an event of "stopped" or "running" is occured on ec2 instance.
 resource "aws_cloudwatch_event_rule" "state_ec2_rule" {
   name        = "capture-ec2-state-change"
   description = "Capture each AWS ec2 state-change"
@@ -46,7 +48,7 @@ resource "aws_cloudwatch_event_rule" "state_ec2_rule" {
     }
   })
 }
-
+#Targets the sns topic as of the rule created.
 resource "aws_cloudwatch_event_target" "target_sns" {
   rule      = aws_cloudwatch_event_rule.state_ec2_rule.name
   target_id = "SendToSNS"
@@ -57,7 +59,7 @@ resource "aws_sns_topic" "aws_ec2_state" {
   name = "aws-ec2-state"
 }
 
-
+#Creates subscribtion
 resource "aws_sns_topic_subscription" "user_updates_sms_target" {
   topic_arn = local.topic_state_arn
   protocol  = "email"
@@ -68,6 +70,7 @@ resource "aws_sns_topic_policy" "sns_state_policy" {
   policy = data.aws_iam_policy_document.sns_topic_policy.json
 }
 
+#Creates IAM policies to sceduler, sns topics, and attaching.
 data "aws_iam_policy_document" "sns_topic_policy" {
   statement {
     effect  = "Allow"

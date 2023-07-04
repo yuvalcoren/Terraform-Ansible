@@ -4,7 +4,6 @@
 module "Networking" {
   source                    = "./module/networking"
   name                      = "VPC"
-  availability_zones        = ["eu-west-1a"]
   vpc_cidr_block            = "10.0.0.0/16"
   public_subnets_cidr_block = "10.0.0.0/24"
 }
@@ -13,6 +12,7 @@ module "ec2" {
   security_group_ids = module.Networking.security_groups_ids
   public_subnet_id   = module.Networking.public_subnets_id
   selected_domain    = "yuvalcoren.com"
+  availability_zone  = "eu-west-1c"
 }
 module "EventBridge" {
   source              = "./module/EventBridge"

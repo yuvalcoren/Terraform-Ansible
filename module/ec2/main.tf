@@ -1,10 +1,11 @@
+#Creates keypair
 resource "tls_private_key" "pk" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
 
 resource "aws_key_pair" "kp" {
-  key_name   = "devkey" # Create a "devkey" to AWS!!
+  key_name   = "devkey" 
   public_key = tls_private_key.pk.public_key_openssh
 }
 
@@ -13,12 +14,15 @@ resource "local_file" "ssh_key" {
   content         = tls_private_key.pk.private_key_pem
   file_permission = "0400"
 }
+#Creates aws instance and connecting it using SSH. 
+#The deployment will continue only after ssh has been connected
 resource "aws_instance" "dev_instance" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = local.instance_type
   subnet_id              = local.public_subnet_id
   vpc_security_group_ids = [local.security_group_ids]
   key_name               = local.key_name
+  availability_zone      = local.availability_zone
   provisioner "remote-exec" {
     inline = ["echo 'Wait until SSH is ready'"]
 
@@ -29,10 +33,14 @@ resource "aws_instance" "dev_instance" {
       host        = self.public_ip
     }
   }
+
+  #Connecting to instance after it is connected and installing jenkins and docker engine using ansible playbook
   provisioner "local-exec" {
     command = "ansible-playbook -i ${aws_instance.dev_instance.public_ip}, --private-key ${local.private_key_path} jenkins.yml"
   }
 }
+
+#Creating record type A of instance public ip
 resource "aws_route53_record" "main" {
   zone_id    = data.aws_route53_zone.selected.zone_id
   name       = data.aws_route53_zone.selected.name

@@ -1,5 +1,3 @@
-# This project deploys p
-# Terraform-Ansible
 # The purpose of the project is to create a full Devops work environment with several tools
 # already integrated into an EC2 instance on AWS using Terraform AND Ansible.
 # in detail, this project combined with 3 different modules, each describes different purpose

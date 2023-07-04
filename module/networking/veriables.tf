@@ -14,7 +14,7 @@ variable "public_subnets_cidr_block" {
 }
 
 variable "availability_zones" {
-  type        = list
+  type        = list(any)
   description = "AZ in which all the resources will be deployed"
 }
 

@@ -82,8 +82,8 @@ data "aws_iam_policy_document" "sns_topic_policy" {
   }
 }
 resource "aws_iam_role_policy" "StartStopEc2Instances" {
-  name        = "StartStopPolicyInstances"
-  role        = aws_iam_role.startinschedule.name
+  name = "StartStopPolicyInstances"
+  role = aws_iam_role.startinschedule.name
   policy = jsonencode({
     "Version" : "2012-10-17",
     "Statement" : [

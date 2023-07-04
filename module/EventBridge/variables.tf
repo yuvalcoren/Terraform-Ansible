@@ -11,6 +11,6 @@ variable "email_dev" {
   description = "The Email of developer"
 }
 variable "instance_id" {
-  type = string
+  type        = string
   description = "The instance of developer"
 }

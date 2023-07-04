@@ -42,32 +42,32 @@ resource "aws_security_group" "security_group" {
   name        = "${local.name} Security Group"
   description = "Default SG to allow traffic from the VPC"
   vpc_id      = aws_vpc.vpc.id
-  depends_on  = [
+  depends_on = [
     aws_vpc.vpc
   ]
   ingress {
-    from_port = "80"
-    to_port   = "80"
-    protocol = "tcp"
+    from_port   = "80"
+    to_port     = "80"
+    protocol    = "tcp"
     cidr_blocks = local.scurity_access
   }
   ingress {
-    from_port = "8080"
-    to_port   = "8080"
-    protocol = "tcp"
+    from_port   = "8080"
+    to_port     = "8080"
+    protocol    = "tcp"
     cidr_blocks = local.scurity_access
   }
   ingress {
-    from_port = "22"
-    to_port   = "22"
-    protocol = "tcp"
+    from_port   = "22"
+    to_port     = "22"
+    protocol    = "tcp"
     cidr_blocks = local.scurity_access
   }
 
   egress {
-    from_port = "0"
-    to_port   = "0"
-    protocol  = "-1"
+    from_port   = "0"
+    to_port     = "0"
+    protocol    = "-1"
     cidr_blocks = local.scurity_access
   }
 }

@@ -41,11 +41,11 @@ resource "aws_instance" "dev_instance" {
 }
 
 #Creating record type A of instance public ip
-resource "aws_route53_record" "main" {
-  zone_id    = data.aws_route53_zone.selected.zone_id
-  name       = data.aws_route53_zone.selected.name
-  type       = "A"
-  ttl        = "300"
-  records    = [aws_instance.dev_instance.public_ip]
-  depends_on = [aws_instance.dev_instance]
-}
+# resource "aws_route53_record" "main" {
+#   zone_id    = data.aws_route53_zone.selected.zone_id
+#   name       = data.aws_route53_zone.selected.name
+#   type       = "A"
+#   ttl        = "300"
+#   records    = [aws_instance.dev_instance.public_ip]
+#   depends_on = [aws_instance.dev_instance]
+# }

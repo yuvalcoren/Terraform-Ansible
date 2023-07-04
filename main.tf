@@ -11,7 +11,7 @@ module "ec2" {
   source             = "./module/ec2"
   security_group_ids = module.Networking.security_groups_ids
   public_subnet_id   = module.Networking.public_subnets_id
-  selected_domain    = "yuvalcoren.com"
+  # selected_domain    = "Enter your domain name --> refer to ./module/ec2 to uncomment"
   availability_zone  = "eu-west-1c"
 }
 module "EventBridge" {

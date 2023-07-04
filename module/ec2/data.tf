@@ -13,6 +13,6 @@ data "aws_ami" "ubuntu" {
 
   owners = ["099720109477"] # Canonical
 }
-data "aws_route53_zone" "selected" {
-  name = local.selected_domain
-}
+# data "aws_route53_zone" "selected" {
+#   name = local.selected_domain
+# }

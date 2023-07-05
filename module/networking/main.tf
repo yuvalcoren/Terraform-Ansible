@@ -3,12 +3,17 @@ resource "aws_vpc" "vpc" {
   cidr_block           = local.cidr_block
   enable_dns_hostnames = true
   enable_dns_support   = true
-
+  tags                 = {
+    name= "VPC"
+  }
 }
 
 # Internet Gateway for Public Subnet
 resource "aws_internet_gateway" "internet_gateway" {
   vpc_id = aws_vpc.vpc.id
+  tags   = {
+    name = "igw"
+  }
 }
 
 # Public subnet
@@ -16,11 +21,17 @@ resource "aws_subnet" "public_subnet" {
   vpc_id                  = aws_vpc.vpc.id
   cidr_block              = local.public_subnets_cidr_block
   map_public_ip_on_launch = true
+   tags   = {
+    name = "public subnet"
+  }
 }
 
 # Routing tables to route traffic for Public Subnet
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
+   tags   = {
+    name = "public route"
+  }
 
 }
 
@@ -29,6 +40,7 @@ resource "aws_route" "public_internet_gateway" {
   route_table_id         = aws_route_table.public.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.internet_gateway.id
+
 }
 
 # Route table associations for Public Subnets
@@ -45,6 +57,10 @@ resource "aws_security_group" "security_group" {
   depends_on = [
     aws_vpc.vpc
   ]
+   tags   = {
+    name = "jenkins sg"
+  }
+
   ingress {
     from_port   = "80"
     to_port     = "80"

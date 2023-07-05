@@ -12,11 +12,10 @@ module "ec2" {
   security_group_ids = module.Networking.security_groups_ids
   public_subnet_id   = module.Networking.public_subnets_id
   # selected_domain    = "Enter your domain name --> refer to ./module/ec2 to uncomment"
-  availability_zone  = "eu-west-1c"
 }
 module "EventBridge" {
   source              = "./module/EventBridge"
-  time_instance_start = "cron(10 22 * * ? *)"
+  time_instance_start = "cron(00 16 * * ? *)"
   time_instance_stop  = "cron(00 04 * * ? *)"
   instance_id         = module.ec2.aws_instance_id
   email_dev           = "yuvalcoren@gmail.com"

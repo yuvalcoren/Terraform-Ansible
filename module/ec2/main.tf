@@ -5,7 +5,7 @@ resource "tls_private_key" "pk" {
 }
 
 resource "aws_key_pair" "kp" {
-  key_name   = "devkey" 
+  key_name   = "devkey"
   public_key = tls_private_key.pk.public_key_openssh
 }
 
@@ -22,7 +22,9 @@ resource "aws_instance" "dev_instance" {
   subnet_id              = local.public_subnet_id
   vpc_security_group_ids = [local.security_group_ids]
   key_name               = local.key_name
-  availability_zone      = local.availability_zone
+  tags   = {
+    Name = "DevOps instance"
+  }
   provisioner "remote-exec" {
     inline = ["echo 'Wait until SSH is ready'"]
 
@@ -36,7 +38,7 @@ resource "aws_instance" "dev_instance" {
 
   #Connecting to instance after it is connected and installing jenkins and docker engine using ansible playbook
   provisioner "local-exec" {
-    command = "ansible-playbook -i ${aws_instance.dev_instance.public_ip}, --private-key ${local.private_key_path} jenkins.yml"
+    command = "ansible-playbook -i ${self.public_ip}, --private-key ${local.private_key_path} jenkins.yml"
   }
 }
 

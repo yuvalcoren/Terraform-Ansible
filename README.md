@@ -77,3 +77,4 @@ To use this project, follow the steps below:
 
 8. Customize the EventBridge module as per your requirements by modifying the cron schedule and email notification settings.
 
+![projectaws](https://github.com/yuvalcoren/Terraform-Ansible/assets/132250761/8811a707-d3a6-4980-8830-2369cbb8ccf0)
